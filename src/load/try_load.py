@@ -29,6 +29,10 @@ def try_load():
     df = pd.read_parquet(buffer1)
     response.close()
     response.release_conn()
+    ## as we do full load so clear db first
+    cursor.execute("""
+                   TRUNCATE TABLE try_dag.employee;
+                   """)
     for _,row in df.iterrows():
         cursor.execute("""
         INSERT INTO try_dag.employee (department, avg_salary)
