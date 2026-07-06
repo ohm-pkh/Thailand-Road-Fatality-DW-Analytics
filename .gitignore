@@ -1,4 +1,7 @@
 .venv
 data/
 *.drawio*
-logs/
+airflow/logs/*
+.env
+__pycache__
+*.cfg

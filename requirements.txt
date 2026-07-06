@@ -1,0 +1,4 @@
+pandas
+minio
+SQLAlchemy
+psycopg2-binary
