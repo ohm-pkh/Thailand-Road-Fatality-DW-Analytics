@@ -15,7 +15,7 @@ def extract_location():
                    secret_key=minio_password,
                    secure=False)
     
-    path = str(datetime.now().date()) + '/location/' 
+    path = '/location/' + str(datetime.now().date())
     
     for obj in client.list_objects(bucket_name="raw-data",prefix="location/" , recursive=True):
         if obj.object_name.endswith(".csv"):
@@ -32,7 +32,7 @@ def extract_location():
             parquet_name = parquet_name.removeprefix("location/")
             
             client.put_object(
-                bucket_name="extracted-data",
+                bucket_name="stage-data",
                 object_name= path + parquet_name,
                 data=buffer,
                 length=buffer.getbuffer().nbytes,

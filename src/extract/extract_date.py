@@ -15,7 +15,7 @@ def extract_date():
                    secret_key=minio_password,
                    secure=False)
     
-    path =  str(datetime.now().date()) + '/date/'
+    path =  '/date/' + str(datetime.now().date())
     
     for obj in client.list_objects(bucket_name="raw-data",prefix="date/" , recursive=True):
         if obj.object_name.endswith(".csv"):
@@ -32,7 +32,7 @@ def extract_date():
             parquet_name = parquet_name.removeprefix("date/")
             
             client.put_object(
-                bucket_name="extracted-data",
+                bucket_name="stage-data",
                 object_name= path + parquet_name,
                 data=buffer,
                 length=buffer.getbuffer().nbytes,

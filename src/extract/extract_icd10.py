@@ -15,7 +15,7 @@ def extract_icd10():
                    secret_key=minio_password,
                    secure=False)
     
-    path = str(datetime.now().date()) + '/ICD-10/'
+    path = '/ICD-10/' + str(datetime.now().date()) 
     for obj in client.list_objects(bucket_name="raw-data",prefix="icd-10/" , recursive=True):
         if obj.object_name.endswith(".csv"):
             response = client.get_object("raw-data", obj.object_name)
@@ -31,7 +31,7 @@ def extract_icd10():
             parquet_name = parquet_name.removeprefix("icd-10/")
             
             client.put_object(
-                bucket_name="extracted-data",
+                bucket_name="stage-data",
                 object_name= path + parquet_name,
                 data=buffer,
                 length=buffer.getbuffer().nbytes,
